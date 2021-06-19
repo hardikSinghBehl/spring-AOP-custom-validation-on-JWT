@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hardik.crackerjack.annotation.CheckIfEnabled;
+import com.hardik.crackerjack.annotation.CheckIfFromIndia;
 import com.hardik.crackerjack.dto.UserLoginRequestDto;
 import com.hardik.crackerjack.dto.UserRegisterationDto;
 import com.hardik.crackerjack.security.utility.JwtUtils;
@@ -41,6 +43,8 @@ public class UserController {
 		return userService.login(userLoginRequestDto);
 	}
 
+	@CheckIfEnabled
+	@CheckIfFromIndia
 	@GetMapping(value = "/user/details")
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = "Returns details of logged in user")
