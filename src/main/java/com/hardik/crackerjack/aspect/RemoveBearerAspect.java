@@ -15,8 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RemoveBearerAspect {
 
-	private Integer headerArgumentPosition;
-
 	@Around("execution(* com.hardik.crackerjack.controller.*.*(..))")
 	public Object removeBearerStringFromHeader(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		log.info("Running Bearer Removal Task From Headers Method {}() in {}.class",
@@ -24,6 +22,8 @@ public class RemoveBearerAspect {
 				proceedingJoinPoint.getSignature().getDeclaringType().getSimpleName());
 
 		Object[] modifiedArgs = proceedingJoinPoint.getArgs();
+
+		Integer headerArgumentPosition = null;
 
 		CodeSignature codeSignature = (CodeSignature) proceedingJoinPoint.getSignature();
 		AtomicInteger count = new AtomicInteger(0);
@@ -45,5 +45,4 @@ public class RemoveBearerAspect {
 
 		return proceedingJoinPoint.proceed();
 	}
-
 }
