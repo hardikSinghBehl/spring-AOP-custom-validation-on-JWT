@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,7 +22,7 @@ public class CountryController {
 
 	private final MasterCountryRepository masterCountryRepository;
 
-	@GetMapping("/countries")
+	@GetMapping(value = "/countries", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = "Returns list of countries in the system")
 	public ResponseEntity<List<CountryDto>> countryListRetreivalHandler() {

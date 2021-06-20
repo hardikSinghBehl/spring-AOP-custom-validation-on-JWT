@@ -3,6 +3,7 @@ package com.hardik.crackerjack.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class UserController {
 	private final UserService userService;
 	private final JwtUtils jwtUtils;
 
-	@PostMapping(value = "/user/auth/register")
+	@PostMapping(value = "/user/auth/register", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = "Registers user in the system")
 	public ResponseEntity<?> userRegisterationHandler(
@@ -37,7 +38,7 @@ public class UserController {
 		return userService.register(userRegisterationDto);
 	}
 
-	@PostMapping(value = "/user/auth/login")
+	@PostMapping(value = "/user/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = "Returns JWT representing logged in user")
 	public ResponseEntity<?> userLoginHandler(
@@ -47,7 +48,7 @@ public class UserController {
 
 	@CheckIfEnabled
 	@CheckIfFromIndia
-	@GetMapping(value = "/user/details")
+	@GetMapping(value = "/user/details", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = "Returns details of logged in user")
 	public ResponseEntity<?> userDetailRetreivalHandler(
