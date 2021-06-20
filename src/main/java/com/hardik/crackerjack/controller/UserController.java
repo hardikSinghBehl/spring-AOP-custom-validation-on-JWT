@@ -1,5 +1,7 @@
 package com.hardik.crackerjack.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,7 @@ public class UserController {
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = "Registers user in the system")
 	public ResponseEntity<?> userRegisterationHandler(
-			@RequestBody(required = true) final UserRegisterationDto userRegisterationDto) {
+			@Valid @RequestBody(required = true) final UserRegisterationDto userRegisterationDto) {
 		return userService.register(userRegisterationDto);
 	}
 
