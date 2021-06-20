@@ -22,7 +22,7 @@ public class MasterCountryDataBootstrap {
 	public void masterCountryDataBootstrapHandler() {
 		for (int i = 0; i < countryList.size() - 1; i++) {
 			final var country = new MasterCountry();
-			country.setId(i);
+			country.setId(i + 1);
 			country.setName(countryList.get(i));
 			masterCountryRepository.save(country);
 		}
