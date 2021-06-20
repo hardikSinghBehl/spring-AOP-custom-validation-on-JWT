@@ -11,6 +11,9 @@ import com.hardik.crackerjack.dto.UserDto;
 import com.hardik.crackerjack.dto.UserLoginRequestDto;
 import com.hardik.crackerjack.dto.UserRegisterationDto;
 import com.hardik.crackerjack.entity.User;
+import com.hardik.crackerjack.exception.DuplicateEmailIdException;
+import com.hardik.crackerjack.exception.InvalidCountryIdException;
+import com.hardik.crackerjack.exception.InvalidLoginCredentialsException;
 import com.hardik.crackerjack.repository.MasterCountryRepository;
 import com.hardik.crackerjack.repository.UserRepository;
 import com.hardik.crackerjack.security.utility.JwtUtils;
@@ -37,10 +40,10 @@ public class UserService {
 	public ResponseEntity<?> register(final UserRegisterationDto userRegisterationDto) {
 
 		if (existsByEmailId(userRegisterationDto.getEmailId()))
-			throw new RuntimeException();
+			throw new DuplicateEmailIdException();
 
 		if (existsByCountryId(userRegisterationDto.getCountryId()))
-			throw new RuntimeException();
+			throw new InvalidCountryIdException();
 
 		final var user = new User();
 		user.setEmailId(userRegisterationDto.getEmailId());
@@ -59,7 +62,7 @@ public class UserService {
 				.orElseThrow(() -> new RuntimeException());
 
 		if (!passwordEncoder.matches(userLoginRequestDto.getPassword(), user.getPassword()))
-			throw new RuntimeException();
+			throw new InvalidLoginCredentialsException();
 
 		final var response = new JSONObject();
 		response.put("JWT", jwtUtils.generateToken(user));
