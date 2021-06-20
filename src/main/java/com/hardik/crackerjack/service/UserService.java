@@ -11,6 +11,7 @@ import com.hardik.crackerjack.dto.UserDto;
 import com.hardik.crackerjack.dto.UserLoginRequestDto;
 import com.hardik.crackerjack.dto.UserRegisterationDto;
 import com.hardik.crackerjack.entity.User;
+import com.hardik.crackerjack.repository.MasterCountryRepository;
 import com.hardik.crackerjack.repository.UserRepository;
 import com.hardik.crackerjack.security.utility.JwtUtils;
 
@@ -21,6 +22,7 @@ import lombok.AllArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final MasterCountryRepository masterCountryRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtils jwtUtils;
 
@@ -28,9 +30,16 @@ public class UserService {
 		return userRepository.existsByEmailId(emailId);
 	}
 
+	private Boolean existsByCountryId(final Integer countryId) {
+		return masterCountryRepository.existsById(countryId);
+	}
+
 	public ResponseEntity<?> register(final UserRegisterationDto userRegisterationDto) {
 
 		if (existsByEmailId(userRegisterationDto.getEmailId()))
+			throw new RuntimeException();
+
+		if (existsByCountryId(userRegisterationDto.getCountryId()))
 			throw new RuntimeException();
 
 		final var user = new User();
