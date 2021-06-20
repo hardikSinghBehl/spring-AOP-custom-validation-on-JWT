@@ -47,7 +47,7 @@ public class ExceptionResponseHandler {
 
 	@ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
 	@ResponseBody
-	@ExceptionHandler(InvalidCountryIdException.class)
+	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> geenricExceptionHandler(Exception exception) {
 		return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(ExceptionResponseDto.builder().status("Failure")
 				.message("Something went wrong").timestamp(LocalDateTime.now()).build());
